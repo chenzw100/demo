@@ -71,10 +71,7 @@ public class HelloController {
         System.out.println(str);
         return "111";
     }
-    @Bean
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
+
 
     @RequestMapping("/getmy")
     public String getmy() throws IOException {
