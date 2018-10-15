@@ -1,5 +1,6 @@
 package com.example.demo.task;
 
+import com.example.demo.mail.MailSendUtil;
 import com.example.demo.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,11 +13,12 @@ public class ScheduledService {
     @Autowired
     private StockService stockService;
     //0 0 9 ? * MON-FRI
-    @Scheduled(cron = "0/20 * 16 * * 1-5")
+    @Scheduled(cron = "0 * 9 * * 1-5")
     public void scheduled(){
         System.out.println("=====>>>>>使用cron  "+System.currentTimeMillis());
         try {
             stockService.taoguba();
+            //MailSendUtil.sendMail(content);
         } catch (IOException e) {
             System.out.println(e.getMessage());
 
