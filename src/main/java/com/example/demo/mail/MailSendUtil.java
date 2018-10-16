@@ -1,22 +1,26 @@
 package com.example.demo.mail;
 
-import jodd.time.JulianDate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Properties;
 
+@Component
+@ConfigurationProperties
+@PropertySource("classpath:mail.properties")
 public class MailSendUtil {
     private final static String host = "smtp.163.com"; //163的服务器
-    private final static String formName = "xxx@163.com";//你的邮箱
-    private final static String password = "***"; //授权码
-    private final static String replayAddress = "xxx@163.com"; //你的邮箱
+    private  static String formName = "xxx@163.com";//你的邮箱
+    private  static String password = "***"; //授权码
+    private final static String replayAddress = formName; //你的邮箱
 
 
     public static void sendHtmlMail(MailInfo info)throws Exception{
@@ -103,5 +107,22 @@ public class MailSendUtil {
             System.out.print("'的邮件发送失败！");
             e.printStackTrace();
         }
+    }
+
+    @Value("${spring.mail.form}")
+    public  void setFormName(String formName) {
+        MailSendUtil.formName=formName;
+    }
+    @Value("${spring.mail.password}")
+    public  void setPassword(String password) {
+        MailSendUtil.password=password;
+    }
+
+    public static String getFormName() {
+        return formName;
+    }
+
+    public static String getPassword() {
+        return password;
     }
 }
