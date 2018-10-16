@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.mail.MailSendUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -39,21 +40,26 @@ public class StockService {
     }
     public String taoguba() throws IOException {
         StringBuilder sb = new StringBuilder();
+        sb.append("09H:");
         Document doc = Jsoup.connect("https://www.taoguba.com.cn/hotPop").get();
         Elements elements = doc.getElementsByClass("tbleft");
         for(int i=0;i<20;i++){
+            if(i==9){
+                sb.append(" 24H:");
+            }
             Element element = elements.get(i);
             String stockName = element.text();
             //sb.append(stockName).append(",");
             String url = element.getElementsByAttribute("href").attr("href");
             int length = url.length();
             String code = url.substring(length-9,length-1);
-            System.out.println(stockName+":"+code);
             if(sinajs(code)){
+                System.out.println(stockName+":"+code);
                 sb.append(stockName).append(",");
             }
 
         }
+        MailSendUtil.sendMail(sb.toString());
         return sb.toString();
     }
 }

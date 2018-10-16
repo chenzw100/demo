@@ -1,13 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.utils.UtilsRequestCallBack;
-import com.example.demo.utils.UtilsResponseExtractor;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+/*import com.example.demo.utils.UtilsResponseExtractor;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -17,24 +14,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Map;*/
 
-@RestController
+//@RestController
 public class HelloController {
-    @Autowired
+   /* @Autowired
     private RestTemplate restTemplate;
     @RequestMapping("/sina")
     public String sina(){
@@ -47,7 +40,7 @@ public class HelloController {
     }
     @RequestMapping("/hello")
     public String hello(){
-        /*CloseableHttpClient httpCilent = HttpClients.createDefault();//Creates CloseableHttpClient instance with default configuration.
+        *//*CloseableHttpClient httpCilent = HttpClients.createDefault();//Creates CloseableHttpClient instance with default configuration.
         HttpGet httpGet = new HttpGet("http://www.baidu.com");
         try {
             CloseableHttpResponse response = httpCilent.execute(httpGet);
@@ -60,8 +53,7 @@ public class HelloController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }*/
-
+        }*//*
         ResponseExtractor responseExtractor =  new UtilsResponseExtractor(restTemplate,String.class);
         Object response =  restTemplate.execute("https://www.taoguba.com.cn/hotPop", HttpMethod.GET,null,responseExtractor);
         String str = response.toString();
@@ -88,9 +80,8 @@ public class HelloController {
         }
         return sb.toString();
     }
-
-    @RequestMapping("/ths")
-    public String ths() throws IOException {
+*/
+    /*public String ths() throws IOException {
         //http://d.10jqka.com.cn/v2/realhead/hs_002803/last.js 69 30 10
         CloseableHttpClient httpCilent = HttpClients.createDefault();//Creates CloseableHttpClient instance with default configuration.
        String url="http://d.10jqka.com.cn/v2/realhead/hs_002803/last.js";
@@ -136,5 +127,5 @@ public class HelloController {
         }
 
         return "2";
-    }
+    }*/
 }

@@ -85,7 +85,7 @@ public class MailSendUtil {
         return message ;
     }
 
-    private void sendMail(String content){
+    public static void sendMail(String content){
         MailInfo info = new MailInfo();
         info.setContent(content);
         try {
