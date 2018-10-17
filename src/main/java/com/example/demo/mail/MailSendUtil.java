@@ -1,22 +1,25 @@
 package com.example.demo.mail;
 
-import jodd.time.JulianDate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Properties;
 
+@Component
+@ConfigurationProperties
+@PropertySource("classpath:mail.properties")
 public class MailSendUtil {
     private final static String host = "smtp.163.com"; //163的服务器
-    private final static String formName = "888@163.com";//你的邮箱
-    private final static String password = "***"; //授权码
-    private final static String toAddress = formName;
+    private  static String formName = "xxx@163.com";//你的邮箱
+    private  static String password = "***"; //授权码
     private final static String replayAddress = formName; //你的邮箱
 
 
@@ -84,7 +87,6 @@ public class MailSendUtil {
 
     public static void sendMail(String content){
         MailInfo info = new MailInfo();
-        info.setToAddress(toAddress);
         info.setContent(content);
         try {
             MailSendUtil.sendTextMail(info);
@@ -95,7 +97,7 @@ public class MailSendUtil {
         }
     }
     public static void main(String[] args) {
-        String content = "英联";
+        String content = "英联股份,高争民爆,大烨智能,英联股份,兴瑞科技,高争民爆,江龙船艇";
         MailInfo info = new MailInfo();
         info.setContent(content);
         try {
@@ -105,5 +107,22 @@ public class MailSendUtil {
             System.out.print("'的邮件发送失败！");
             e.printStackTrace();
         }
+    }
+
+    @Value("${spring.mail.form}")
+    public  void setFormName(String formName) {
+        MailSendUtil.formName=formName;
+    }
+    @Value("${spring.mail.password}")
+    public  void setPassword(String password) {
+        MailSendUtil.password=password;
+    }
+
+    public static String getFormName() {
+        return formName;
+    }
+
+    public static String getPassword() {
+        return password;
     }
 }
