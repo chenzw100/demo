@@ -1,7 +1,9 @@
 package com.example.demo.task;
 
-import com.example.demo.mail.MailSendUtil;
 import com.example.demo.service.StockService;
+import jodd.time.JulianDate;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -10,19 +12,19 @@ import java.io.IOException;
 
 @Component
 public class ScheduledService {
+    Log log = LogFactory.getLog(ScheduledService.class);
     @Autowired
     private StockService stockService;
     //0 0 9 ? * MON-FRI
-    @Scheduled(cron = "0 * 9 * * 1-5")
+    @Scheduled(cron = "0/5 * 9,11,12 ? * MON-FRI")
     public void scheduled(){
-        System.out.println("=====>>>>>使用cron  "+System.currentTimeMillis());
-        try {
-            stockService.taoguba();
+        log.info("=====>>>>>use cron");
+        /*try {
+            //stockService.taoguba();
             //MailSendUtil.sendMail(content);
         } catch (IOException e) {
             System.out.println(e.getMessage());
-
-        }
+        }*/
     }
     /*@Scheduled(fixedRate = 5000)
     public void scheduled1() {

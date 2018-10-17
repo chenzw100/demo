@@ -14,9 +14,10 @@ import java.util.Properties;
 
 public class MailSendUtil {
     private final static String host = "smtp.163.com"; //163的服务器
-    private final static String formName = "xxx@163.com";//你的邮箱
+    private final static String formName = "888@163.com";//你的邮箱
     private final static String password = "***"; //授权码
-    private final static String replayAddress = "xxx@163.com"; //你的邮箱
+    private final static String toAddress = formName;
+    private final static String replayAddress = formName; //你的邮箱
 
 
     public static void sendHtmlMail(MailInfo info)throws Exception{
@@ -83,6 +84,7 @@ public class MailSendUtil {
 
     public static void sendMail(String content){
         MailInfo info = new MailInfo();
+        info.setToAddress(toAddress);
         info.setContent(content);
         try {
             MailSendUtil.sendTextMail(info);
@@ -93,7 +95,7 @@ public class MailSendUtil {
         }
     }
     public static void main(String[] args) {
-        String content = "英联股份,高争民爆,大烨智能,英联股份,兴瑞科技,高争民爆,江龙船艇";
+        String content = "英联";
         MailInfo info = new MailInfo();
         info.setContent(content);
         try {
