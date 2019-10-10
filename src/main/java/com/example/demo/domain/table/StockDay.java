@@ -120,8 +120,10 @@ public class StockDay implements Serializable {
         this.continuous = continuous;
     }
 
+    public StockDay() {
+    }
 
-    public StockDay(String code, String name,Date date){
+    public StockDay(String code, String name, Date date){
         this.code=code;
         this.name = name;
         this.dayFormat = MyUtils.getDayFormat(date);

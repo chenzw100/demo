@@ -33,6 +33,8 @@ public class StockCurrent implements Serializable {
     private Integer hotValue;
     @Column(nullable = true,columnDefinition="int(11) DEFAULT 0 COMMENT '最近7日'")
     private Integer hotSeven;
+    public StockCurrent(){
+    }
     public StockCurrent(String code, String name,Date date){
         this.code=code;
         this.name = name;

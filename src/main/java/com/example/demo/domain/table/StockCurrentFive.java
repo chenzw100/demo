@@ -117,8 +117,7 @@ public class StockCurrentFive implements Comparable<StockCurrentFive>{
         this.totalCount = totalCount;
     }
 
-    @Transient
-    private String sinaUrl;
+
 
     public Integer getShowCount() {
         if(showCount==null){
@@ -178,7 +177,6 @@ public class StockCurrentFive implements Comparable<StockCurrentFive>{
     public StockCurrentFive(String code, String name){
         this.code =code;
         this.name = name;
-        this.sinaUrl="https://hq.sinajs.cn/list="+code;
         this.yesterdayClosePrice=10;
         this.todayOpenPrice=10;
         this.todayClosePrice=10;
@@ -329,13 +327,6 @@ public class StockCurrentFive implements Comparable<StockCurrentFive>{
         this.tomorrowCloseRate = tomorrowCloseRate;
     }
 
-    public String getSinaUrl() {
-        return sinaUrl;
-    }
-
-    public void setSinaUrl(String sinaUrl) {
-        this.sinaUrl = sinaUrl;
-    }
 
     public String toString(){
         StringBuilder sb = new StringBuilder();

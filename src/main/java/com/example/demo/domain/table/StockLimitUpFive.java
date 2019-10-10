@@ -47,6 +47,9 @@ public class StockLimitUpFive implements Serializable {
     @Transient
     private String fiveLowRate;
 
+    public StockLimitUpFive() {
+    }
+
     public Integer getShowCount() {
         if(showCount==null){
             showCount=0;

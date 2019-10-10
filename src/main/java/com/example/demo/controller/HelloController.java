@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dao.*;
 import com.example.demo.domain.table.*;
-import com.example.demo.service.xgb.XgbService;
 import com.example.demo.task.PanService;
 import com.example.demo.utils.ChineseWorkDay;
 import com.example.demo.utils.MyChineseWorkDay;
