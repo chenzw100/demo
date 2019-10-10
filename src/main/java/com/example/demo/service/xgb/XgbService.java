@@ -3,8 +3,6 @@ package com.example.demo.service.xgb;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.dao.*;
-import com.example.demo.domain.DownStock;
-import com.example.demo.domain.XGBStock;
 import com.example.demo.domain.table.StockDown;
 import com.example.demo.domain.table.StockLimitUp;
 import com.example.demo.domain.table.StockSpaceHeight;

@@ -1,7 +1,5 @@
 package com.example.demo.dao;
 
-import com.example.demo.domain.MyFiveTgbStock;
-import com.example.demo.domain.table.StockCurrentFive;
 import com.example.demo.domain.table.StockDayFive;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

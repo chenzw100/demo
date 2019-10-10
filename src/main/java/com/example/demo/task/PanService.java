@@ -2,9 +2,7 @@ package com.example.demo.task;
 
 import com.example.demo.enums.NumberEnum;
 import com.example.demo.service.pan.DealPanDataService;
-import com.example.demo.service.tgb.TgbDealDataService;
 import com.example.demo.service.tgb.TgbService;
-import com.example.demo.service.xgb.XgbDealDataService;
 import com.example.demo.service.xgb.XgbService;
 import com.example.demo.utils.ChineseWorkDay;
 import com.example.demo.utils.MyUtils;

@@ -1,6 +1,5 @@
 package com.example.demo.dao;
 
-import com.example.demo.domain.CurrentStock;
 import com.example.demo.domain.MyTotalStock;
 import com.example.demo.domain.table.StockCurrent;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,7 +19,7 @@ import java.util.List;
  userRepository.exists(1l);
  */
 public interface StockCurrentRepository extends JpaRepository<StockCurrent,Long> {
-    StockCurrent save(CurrentStock tgbStock);
+    StockCurrent save(StockCurrent tgbStock);
     @Query(value="SELECT * FROM ( SELECT code, name,sum(hot_seven) as hot_seven,sum(hot_value) as hot_value, COUNT(id) as total_count from stock_current WHERE day_format BETWEEN ?1 AND ?2  GROUP BY code) as temp WHERE temp.total_count>26 ORDER BY total_count DESC ", nativeQuery = true)
     public List<MyTotalStock> fiveInfo(String start, String end);
 

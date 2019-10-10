@@ -1,11 +1,9 @@
 package com.example.demo.domain.table;
 
-import com.example.demo.domain.DownStock;
 import com.example.demo.utils.MyUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *  * 今天竞价涨幅，相对于昨天收盘的涨幅 (todayOpenPrice-yesterdayPrice)/yesterdayPrice

@@ -1,12 +1,8 @@
 package com.example.demo.service.tgb;
 
 import com.example.demo.dao.*;
-import com.example.demo.domain.CurrentStock;
 import com.example.demo.domain.MyTotalStock;
-import com.example.demo.domain.TgbStock;
-import com.example.demo.domain.XGBStock;
 import com.example.demo.domain.table.*;
-import com.example.demo.enums.NumberEnum;
 import com.example.demo.service.qt.QtService;
 import com.example.demo.utils.MyChineseWorkDay;
 import com.example.demo.utils.MyUtils;
@@ -18,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 /**

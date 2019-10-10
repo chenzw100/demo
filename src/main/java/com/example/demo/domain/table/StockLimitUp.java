@@ -1,7 +1,5 @@
 package com.example.demo.domain.table;
 
-import com.example.demo.domain.DownStock;
-import com.example.demo.domain.XgbFiveUpStock;
 import com.example.demo.utils.MyUtils;
 
 import javax.persistence.*;
