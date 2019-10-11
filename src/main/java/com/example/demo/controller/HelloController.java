@@ -36,6 +36,7 @@ public class HelloController {
     PanService panService;
     @RequestMapping("/hello")
     public String hello(){
+        panService.currentPan();
         return "hello";
     }
     @RequestMapping("/close")
