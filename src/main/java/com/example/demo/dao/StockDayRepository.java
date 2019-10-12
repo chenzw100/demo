@@ -20,7 +20,7 @@ import java.util.List;
  */
 public interface StockDayRepository extends JpaRepository<StockDay,Long> {
     List<StockDay> findAll();
-    List<StockDay> findByCodeAndDayFormat(String code, String dayFormat);
+    StockDay findByCodeAndDayFormat(String code, String dayFormat);
     List<StockDay> findByDayFormatOrderByHotSort(String dayFormat);
     List<StockDay> findByDayFormatOrderByHotSevenDesc(String dayFormat);
     List<StockDay> findByDayFormatOrderByOpenBidRateDesc(String dayFormat);

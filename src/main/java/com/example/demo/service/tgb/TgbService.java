@@ -53,9 +53,9 @@ public class TgbService extends QtService {
                 }
                 StockDay tgbStock = new StockDay(code,stockName,MyUtils.getCurrentDate());
                 tgbStock.setYesterdayClosePrice(MyUtils.getCentBySinaPriceStr(currentPrice));
-                List<StockDay> list = stockDayRepository.findByCodeAndDayFormat(code,MyUtils.getDayFormat());
-                if(list!=null && list.size()>0){
-                    tgbStock = list.get(0);
+                StockDay sd = stockDayRepository.findByCodeAndDayFormat(code,MyUtils.getDayFormat());
+                if(sd!=null){
+                    tgbStock = sd;
                 }
                 tgbStock.setHotSort(i - 9);
                 tgbStock.setHotValue(Integer.parseInt(tds.get(2).text()));
@@ -78,6 +78,12 @@ public class TgbService extends QtService {
                     tgbStock.setOneFlag(1);
                     tgbStock.setContinuous(0);
                     tgbStock.setLimitUp(0);
+                }
+                StockDay stockDay = stockDayRepository.findByCodeAndDayFormat(tgbStock.getCode(),MyUtils.getYesterdayDayFormat());
+                if(stockDay!=null){
+                    tgbStock.setShowCount(stockDay.getShowCount()+1);
+                }else {
+                    tgbStock.setShowCount(1);
                 }
                 stockDayRepository.save(tgbStock);
 
