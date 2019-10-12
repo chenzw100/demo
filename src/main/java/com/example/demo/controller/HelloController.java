@@ -1,131 +1,93 @@
 package com.example.demo.controller;
 
-/*import com.example.demo.utils.UtilsResponseExtractor;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.example.demo.dao.*;
+import com.example.demo.domain.table.*;
+import com.example.demo.task.PanService;
+import com.example.demo.utils.ChineseWorkDay;
+import com.example.demo.utils.MyChineseWorkDay;
+import com.example.demo.utils.MyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.ResponseExtractor;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;*/
+import java.util.List;
 
-//@RestController
+@RestController
 public class HelloController {
-   /* @Autowired
-    private RestTemplate restTemplate;
-    @RequestMapping("/sina")
-    public String sina(){
-        String url ="https://hq.sinajs.cn/list=sz002846";
-        Object response =  restTemplate.getForObject(url,String.class);
-        String str = response.toString();
+    private static String PRE_END="";
+    @Autowired
+    StockCurrentFiveRepository stockCurrentFiveRepository;
+    @Autowired
+    StockDayFiveRepository stockDayFiveRepository;
+    @Autowired
+    StockTemperatureRepository stockTemperatureRepository;
+    @Autowired
+    StockDayRepository stockDayRepository;
+    @Autowired
+    StockLimitUpRepository stockLimitUpRepository;
+    @Autowired
+    StockSpaceHeightRepository stockSpaceHeightRepository;
+    @Autowired
+    StockLimitUpFiveRepository stockLimitUpFiveRepository;
 
-        System.out.println(str);
-        return "str";
-    }
+    @Autowired
+    PanService panService;
     @RequestMapping("/hello")
     public String hello(){
-        *//*CloseableHttpClient httpCilent = HttpClients.createDefault();//Creates CloseableHttpClient instance with default configuration.
-        HttpGet httpGet = new HttpGet("http://www.baidu.com");
-        try {
-            CloseableHttpResponse response = httpCilent.execute(httpGet);
-            return response.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                httpCilent.close();//释放资源
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*//*
-        ResponseExtractor responseExtractor =  new UtilsResponseExtractor(restTemplate,String.class);
-        Object response =  restTemplate.execute("https://www.taoguba.com.cn/hotPop", HttpMethod.GET,null,responseExtractor);
-        String str = response.toString();
-        int begin = str.indexOf("实时个股搜索热度");
-        int end = str.indexOf("24小时用户搜索热度");
-        str=str.substring(begin,end);
-        System.out.println(str);
-        return "111";
+        panService.currentPan();
+        return "hello";
+    }
+    @RequestMapping("/close")
+    public String close(){
+        panService.closePan();
+        return "close success";
     }
 
-
-    @RequestMapping("/getmy")
-    public String getmy() throws IOException {
-        Map resultMap = new HashMap();
-        StringBuilder sb = new StringBuilder();
-        Document doc = Jsoup.connect("https://www.taoguba.com.cn/hotPop").get();
-        Elements elements = doc.getElementsByClass("tbleft");
-        for(int i=0;i<3;i++){
-            Element element = elements.get(i);
-            String urlgegu = element.getElementsByAttribute("href").attr("href");
-            System.out.println(element.text()+":"+urlgegu);
-            //https://hq.sinajs.cn/list=sh603790
-
-        }
-        return sb.toString();
-    }
-*/
-    /*public String ths() throws IOException {
-        //http://d.10jqka.com.cn/v2/realhead/hs_002803/last.js 69 30 10
-        CloseableHttpClient httpCilent = HttpClients.createDefault();//Creates CloseableHttpClient instance with default configuration.
-       String url="http://d.10jqka.com.cn/v2/realhead/hs_002803/last.js";
-        try {
-
-            HttpGet httpget = new HttpGet(url);
-            httpget.addHeader("Accept", "text/html");
-            httpget.addHeader("Accept-Charset", "utf-8");
-            httpget.addHeader("Accept-Encoding", "gzip");
-            httpget.addHeader("Accept-Language", "en-US,en");
-            httpget.addHeader("User-Agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.160 Safari/537.22");
-
-            ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-
-                public String handleResponse(
-                        final HttpResponse response) throws ClientProtocolException, IOException {
-                    int status = response.getStatusLine().getStatusCode();
-                    if (status >= 200 && status < 300) {
-                        HttpEntity entity = response.getEntity();
-                        System.out.println(status);
-                        return entity != null ? EntityUtils.toString(entity) : null;
-                    } else {
-                        System.out.println(status);
-                        Date date=new Date();
-                        System.out.println(date);
-                        System.exit(0);
-                        throw new ClientProtocolException("Unexpected response status: " + status);
-                    }
-                }
-            };
-
-            String response = httpCilent.execute(httpget,responseHandler);
-            System.out.printf(response);
-            return response;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                httpCilent.close();//释放资源
-            } catch (IOException e) {
-                e.printStackTrace();
+    @RequestMapping("/info/{end}")
+    String info(@PathVariable("end")String end) {
+        String queryEnd = end;
+        if("1".equals(end)){
+            if(isWorkday()){
+                queryEnd= MyUtils.getDayFormat();
+            }else {
+                queryEnd=MyUtils.getYesterdayDayFormat();
             }
+        }else if("2".equals(end)){
+            Date endDate =  MyUtils.getFormatDate(PRE_END);
+            queryEnd =MyUtils.getDayFormat(MyChineseWorkDay.preWorkDay(endDate));
+        }else if("3".equals(end)){
+            Date endDate =  MyUtils.getFormatDate(PRE_END);
+            queryEnd =MyUtils.getDayFormat(MyChineseWorkDay.nextWorkDay(endDate));
         }
-
-        return "2";
-    }*/
+        Date endDate =  MyUtils.getFormatDate(queryEnd);
+        PRE_END=queryEnd;
+        String desc ="坚持模式！！<br>查询日期";
+        String start =MyUtils.getDayFormat(MyChineseWorkDay.preDaysWorkDay(5,endDate));
+        endDate =  MyUtils.getFormatDate(queryEnd);
+        String yesterday =MyUtils.getDayFormat(MyChineseWorkDay.preDaysWorkDay(1,endDate));
+        List<StockDayFive> hotSortFive = stockDayFiveRepository.findByDayFormatOrderByOpenBidRate(queryEnd);
+        List<StockCurrentFive> myTgbStockFive = stockCurrentFiveRepository.findByDayFormatOrderByOpenBidRate(queryEnd);
+        List<StockDay> tgbHots = stockDayRepository.findByDayFormatOrderByOpenBidRate(queryEnd);
+        List<StockLimitUpFive> upFives =stockLimitUpFiveRepository.findByDayFormatOrderByContinueBoardCountDesc(queryEnd);
+        List<StockTemperature> temperaturesClose=stockTemperatureRepository.close(start,queryEnd);
+        List<StockSpaceHeight> hs=stockSpaceHeightRepository.findByDayFormat(yesterday);
+        StockSpaceHeight hstock=null;
+        if(hs!=null && hs.size()>0){
+            hstock = hs.get(0);
+        }
+        return desc+queryEnd+"<br>最近5天市场情况<br>"+temperaturesClose+"<br>市场（新题材）最高版:"+hstock+"<br>【相信数据】股吧数量:"+hotSortFive.size()+"<br>"+hotSortFive+"end"+queryEnd+"<br>【信号 相信数据】实时数量:"+myTgbStockFive.size()+"<br>"+myTgbStockFive+queryEnd+"<br>股吧热门:<br>"+tgbHots+"<br>5版近期:<br>"+upFives;
+    }
+    public boolean isWorkday(){
+        ChineseWorkDay chineseWorkDay = new ChineseWorkDay(MyUtils.getCurrentDate());
+        try {
+            if(chineseWorkDay.isWorkday()){
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
