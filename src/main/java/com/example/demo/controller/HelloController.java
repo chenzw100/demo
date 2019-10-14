@@ -44,6 +44,12 @@ public class HelloController {
         panService.closePan();
         return "close success";
     }
+    @RequestMapping("/pre")
+    public String pre(){
+        panService.preTgb();
+        panService.preOpen();
+        return "close success";
+    }
 
     @RequestMapping("/info/{end}")
     String info(@PathVariable("end")String end) {
