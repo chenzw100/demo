@@ -48,7 +48,7 @@ public class HelloController {
     public String pre(){
         panService.preTgb();
         panService.preOpen();
-        return "close success";
+        return "pre success";
     }
 
     @RequestMapping("/info/{end}")
@@ -78,12 +78,13 @@ public class HelloController {
         List<StockDay> tgbHots = stockDayRepository.findByDayFormatOrderByOpenBidRate(queryEnd);
         List<StockLimitUpFive> upFives =stockLimitUpFiveRepository.findByDayFormatOrderByContinueBoardCountDesc(queryEnd);
         List<StockTemperature> temperaturesClose=stockTemperatureRepository.close(start,queryEnd);
+        List<StockTemperature> temperaturesOpen=stockTemperatureRepository.open(start,queryEnd);
         List<StockSpaceHeight> hs=stockSpaceHeightRepository.findByDayFormat(yesterday);
         StockSpaceHeight hstock=null;
         if(hs!=null && hs.size()>0){
             hstock = hs.get(0);
         }
-        return desc+queryEnd+"<br>最近5天市场情况<br>"+temperaturesClose+"<br>市场（新题材）最高版:"+hstock+"<br>【相信数据】股吧数量:"+hotSortFive.size()+"<br>"+hotSortFive+"end"+queryEnd+"<br>【信号 相信数据】实时数量:"+myTgbStockFive.size()+"<br>"+myTgbStockFive+queryEnd+"<br>股吧热门:<br>"+tgbHots+"<br>5版近期:<br>"+upFives;
+        return desc+queryEnd+"<br>最近5天市场情况<br>"+temperaturesClose+"<br>"+temperaturesOpen+"<br>市场（新题材）最高版:"+hstock+"<br>【相信数据】股吧数量:"+hotSortFive.size()+"<br>"+hotSortFive+"end"+queryEnd+"<br>【信号 相信数据】实时数量:"+myTgbStockFive.size()+"<br>"+myTgbStockFive+queryEnd+"<br>股吧热门:<br>"+tgbHots+"<br>5版近期:<br>"+upFives;
     }
     public boolean isWorkday(){
         ChineseWorkDay chineseWorkDay = new ChineseWorkDay(MyUtils.getCurrentDate());
